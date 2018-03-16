@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<audio id="audioPlayer" controls>
+</audio>
+<br></br>
+<input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    var audioPlayer = document.getElementById('audioPlayer');
+    var index = 0;
+    var total = files.length;
+    var srcUrl = URL.createObjectURL(files[index]);
+    audioPlayer.src = srcUrl;
+    audioPlayer.addEventListener('ended',function(e){
+	  index++;
+	  if (index == total){
+	    index = 0;
+      }
+	  audioPlayer.src = URL.createObjectURL(files[index]);
+      audioPlayer.play();
+	});
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+
+</body>
+</html>
